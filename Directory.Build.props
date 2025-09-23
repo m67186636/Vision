@@ -1,0 +1,12 @@
+<Project>
+	<PropertyGroup>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+		<AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
+		<LangVersion>latest</LangVersion>
+		<Version>1.0.0</Version>
+		<Authors>Sunny(m67186636)</Authors>
+		<MicrosoftPackageVersion>8.0.*</MicrosoftPackageVersion>
+		<DotNetVersion>8.0</DotNetVersion>
+		<RootNamespace>Vision</RootNamespace>
+	</PropertyGroup>
+</Project>

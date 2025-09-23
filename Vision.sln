@@ -1,0 +1,68 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{9FA3D6BD-1EC1-3BA5-80CB-CE02773A58D5}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "application", "application", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{8B973C36-1621-4A04-B7BF-0FB77F9E917D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{FDBAD9CF-D2FE-4221-8E1F-53ADFA04757F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vision.DesktopApp", "application\Vision.DesktopApp\Vision.DesktopApp.csproj", "{5A8C1CD0-975E-EB9B-7526-3894E9727C58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vision.OpenCvSharp", "framework\Vision.OpenCvSharp\Vision.OpenCvSharp.csproj", "{47607D13-A19D-4527-B8E9-AE7CBB3633C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vision.Plugins.AI", "Vision.Plugins.AI\Vision.Plugins.AI.csproj", "{FC4F7E19-2D2B-459F-B506-12F426D9863B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A8C1CD0-975E-EB9B-7526-3894E9727C58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A8C1CD0-975E-EB9B-7526-3894E9727C58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A8C1CD0-975E-EB9B-7526-3894E9727C58}.Debug|x64.ActiveCfg = Debug|x64
+		{5A8C1CD0-975E-EB9B-7526-3894E9727C58}.Debug|x64.Build.0 = Debug|x64
+		{5A8C1CD0-975E-EB9B-7526-3894E9727C58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A8C1CD0-975E-EB9B-7526-3894E9727C58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A8C1CD0-975E-EB9B-7526-3894E9727C58}.Release|x64.ActiveCfg = Release|x64
+		{5A8C1CD0-975E-EB9B-7526-3894E9727C58}.Release|x64.Build.0 = Release|x64
+		{47607D13-A19D-4527-B8E9-AE7CBB3633C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47607D13-A19D-4527-B8E9-AE7CBB3633C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47607D13-A19D-4527-B8E9-AE7CBB3633C6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{47607D13-A19D-4527-B8E9-AE7CBB3633C6}.Debug|x64.Build.0 = Debug|Any CPU
+		{47607D13-A19D-4527-B8E9-AE7CBB3633C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47607D13-A19D-4527-B8E9-AE7CBB3633C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47607D13-A19D-4527-B8E9-AE7CBB3633C6}.Release|x64.ActiveCfg = Release|Any CPU
+		{47607D13-A19D-4527-B8E9-AE7CBB3633C6}.Release|x64.Build.0 = Release|Any CPU
+		{FC4F7E19-2D2B-459F-B506-12F426D9863B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC4F7E19-2D2B-459F-B506-12F426D9863B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC4F7E19-2D2B-459F-B506-12F426D9863B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FC4F7E19-2D2B-459F-B506-12F426D9863B}.Debug|x64.Build.0 = Debug|Any CPU
+		{FC4F7E19-2D2B-459F-B506-12F426D9863B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC4F7E19-2D2B-459F-B506-12F426D9863B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC4F7E19-2D2B-459F-B506-12F426D9863B}.Release|x64.ActiveCfg = Release|Any CPU
+		{FC4F7E19-2D2B-459F-B506-12F426D9863B}.Release|x64.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5A8C1CD0-975E-EB9B-7526-3894E9727C58} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{47607D13-A19D-4527-B8E9-AE7CBB3633C6} = {FDBAD9CF-D2FE-4221-8E1F-53ADFA04757F}
+		{FC4F7E19-2D2B-459F-B506-12F426D9863B} = {8B973C36-1621-4A04-B7BF-0FB77F9E917D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1E61D248-6489-49E2-B816-23CEF238D121}
+	EndGlobalSection
+EndGlobal
