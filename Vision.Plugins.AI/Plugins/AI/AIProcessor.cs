@@ -14,6 +14,8 @@ namespace Vision.Plugins.AI
     }
     public abstract class AIProcessor<TModel>: IAIProcessor
     {
+        internal abstract DataMode DataMode { get; }
+        internal abstract ColorMode ColorMode { get; }
         protected abstract string RemoteModelUrl { get; }
 
         protected Lazy<Task<TModel>> LazyModelTask { get; }
@@ -25,13 +27,13 @@ namespace Vision.Plugins.AI
 
         protected virtual async Task<TModel> InitializeModelAsync()
         {
+            var modelDirectory = GetModelDirectory();
             var modelPath = GetModelPath();
-            var directory = Path.GetDirectoryName(modelPath);
-            if (!Directory.Exists(directory))
-                Directory.CreateDirectory(directory);
+            if (!Directory.Exists(modelDirectory))
+                Directory.CreateDirectory(modelDirectory);
             if (!File.Exists(modelPath))
             {
-                var tempPath = modelPath + ".download";
+                var tempPath = modelDirectory + ".download";
                 await DownloadAsync(RemoteModelUrl, tempPath);
                 await PostDownloadAsync(tempPath,modelPath);
             }
@@ -78,12 +80,16 @@ namespace Vision.Plugins.AI
         protected async Task DownloadAsync(string remoteModelUrl, string modelPath)
         {
             using var httpClient = new HttpClient();
-            var response = await httpClient.GetStreamAsync(remoteModelUrl);
+            var requestMessage=new HttpRequestMessage(HttpMethod.Get, remoteModelUrl);
+            var responseMessage= await httpClient.SendAsync(requestMessage,HttpCompletionOption.ResponseHeadersRead);
+            var size= responseMessage.Content.Headers.ContentLength.HasValue ? responseMessage.Content.Headers.ContentLength.Value : -1L;
+            var response = await responseMessage.Content.ReadAsStreamAsync();
             using var file=File.Create(modelPath);
             await response.CopyToAsync(file);
         }
 
         protected abstract string GetModelPath();
+        protected abstract string GetModelDirectory();
         protected string GetModelName()
         {
             var name = GetType().Name;

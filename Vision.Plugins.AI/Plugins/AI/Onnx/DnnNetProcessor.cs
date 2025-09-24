@@ -10,6 +10,8 @@ namespace Vision.Plugins.AI.Onnx
 {
     public abstract class DnnNetProcessor:AIProcessor<Net>
     {
+        internal override ColorMode ColorMode => ColorMode.RGB;
+        internal override DataMode DataMode => DataMode.BCHW;
         protected override Task<Net> CreateModelAsync(string modelPath)
         {
             try
@@ -25,7 +27,11 @@ namespace Vision.Plugins.AI.Onnx
         }
         protected override string GetModelPath()
         {
-            return Path.Combine(Environment.CurrentDirectory, ".models", "onnxs", GetModelName() + ".onnx");
+            return Path.Combine(Environment.CurrentDirectory, ".models", "onnxs", GetModelName(), "model.onnx");
+        }
+        protected override string GetModelDirectory()
+        {
+            return Path.Combine(Environment.CurrentDirectory, ".models", "onnxs", GetModelName());
         }
     }
 }

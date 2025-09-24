@@ -20,7 +20,32 @@ namespace Vision
             InitializeComponent();
             (Before,After) =InitializeControls();
             DoubleBuffered = true;
-            VideoCaptureHelper.Instence.OnFrameCaptured += OnFrameCaptured;
+            VideoCaptureHelper.Instance.OnFrameCaptured += OnFrameCaptured;
+            VideoFileHelper.Instance.OnFrameCaptured += OnFrameCaptured;
+        }
+
+        private void OnFrameCaptured(Bitmap bitmap)
+        {
+            BeginInvoke(() => {
+                Before.Image?.Dispose();
+                Before.Image = bitmap;
+                After.Image?.Dispose();
+                var height = bitmap.Height;
+                if (height > Before.Parent.Parent.Height)
+                {
+                    var radio = (float)bitmap.Height / bitmap.Width;
+                    height = Before.Parent.Parent.Height;
+                    var width = (int)(height / radio);
+                    Before.Width = width;
+                    After.Width = width;
+                }
+                else
+                {
+                    Before.Width = bitmap.Width;
+                    After.Width = bitmap.Width;
+                }
+                Before.Parent.Height = height;
+            });
         }
 
         private void OnFrameCaptured(Bitmap bitmap1, Bitmap bitmap2)
@@ -64,7 +89,7 @@ namespace Vision
             var after = new PictureBox
             {
                 SizeMode = PictureBoxSizeMode.Zoom,
-                BackColor = Color.Black,
+                BackColor = Color.DarkGreen,
             };
             panel.Controls.Add(after);
             return (before, after);
@@ -73,12 +98,14 @@ namespace Vision
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            VideoCaptureHelper.Instence.SetProcessor<RobustVideoMattingProcessor>();
-            Task.Run(VideoCaptureHelper.Instence.StartAsync);
+            //VideoCaptureHelper.Instance.SetProcessor<RobustVideoMattingProcessor>();
+            //Task.Run(VideoCaptureHelper.Instance.StartAsync);
+            Task.Run(VideoFileHelper.Instance.StartAsync);
         }
         protected override void OnClosed(EventArgs e)
         {
-            VideoCaptureHelper.Instence.OnFrameCaptured -= OnFrameCaptured;
+            VideoCaptureHelper.Instance.OnFrameCaptured -= OnFrameCaptured;
+            VideoFileHelper.Instance.OnFrameCaptured -= OnFrameCaptured;
             base.OnClosed(e);
         }
     }

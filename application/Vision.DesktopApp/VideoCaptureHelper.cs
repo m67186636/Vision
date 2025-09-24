@@ -13,18 +13,18 @@ namespace Vision
 {
     public class VideoCaptureHelper
     {
-        public static VideoCaptureHelper Instence { get; }
+        public static VideoCaptureHelper Instance { get; }
 
-        static VideoCaptureHelper() { Instence = new(); }
+        static VideoCaptureHelper() { Instance = new(); }
         protected VideoCapture MainCapture { get; }
         protected IProcessor Processor { set; get; }
 
         public event Action<Bitmap,Bitmap> OnFrameCaptured;
         private VideoCaptureHelper()
         {
-            var modules=Assembly.GetEntryAssembly().GetReferencedAssemblies();
             AIOptions.SessionOptions.IntraOpNumThreads = Environment.ProcessorCount;
-             MainCapture = new VideoCapture(0); // 默认摄像头
+            MainCapture = new VideoCapture(0); // 默认摄像头
+            MainCapture = new VideoCapture(@"B:\lives\kiwifruit\backgroud\VID_20250820_114440_720P1.mp4"); // 默认文件
         }
 
         public async Task StartAsync()

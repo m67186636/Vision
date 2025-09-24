@@ -32,11 +32,11 @@ namespace Vision.Plugins.AI.Onnx
             => new DenseTensor<float>(new float[c * h * w], new[] { 1, c, h, w });
         protected override Task ExecuteAsync(InferenceSession model, Mat image)
         {
-            var r = (float)Math.Max(image.Height, image.Width) / 256;
+            var r = (float)Math.Max(image.Height, image.Width) / 512;
             var width = (int)(image.Width / r);
             var height = (int)(image.Height / r);
             var srcTensor = PreExecute(image, width, height);
-            var ratioTensor = new DenseTensor<float>(new float[] { 1f }, new[] { 1 });
+            var ratioTensor = new DenseTensor<float>(new float[] { 0.25f }, new[] { 1 });
             var binding=model.CreateIoBinding();
             var inputs = new List<NamedOnnxValue>
         {

@@ -8,12 +8,12 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Collections.Specialized.BitVector32;
 
 namespace Vision.Plugins.AI.Onnx
 {
     public class ModNetProcessor : OnnxProcessor
     {
+        internal override DataMode DataMode => DataMode.BCHW;
         protected override string RemoteModelUrl => "https://storage.googleapis.com/ailia-models/modnet/modnet.opt.onnx";
 
         //protected override Task ExecuteAsync(Net model, Mat image)
@@ -44,25 +44,28 @@ namespace Vision.Plugins.AI.Onnx
         //}
         protected override Task ExecuteAsync(InferenceSession model, Mat image)
         {
+            //var metadata=model.InputMetadata.FirstOrDefault().Value;
 
-
-            var inputTensor = PreExecute(image, 256);
+            var r = (float)Math.Max(image.Height, image.Width) / 512;
+            var w = (int)(image.Width / r);
+            var h = (int)(image.Height / r);
+            var inputTensor = PreExecute(image, w,h);
             // Step 4: 输入OnnxRuntime
             var inputs = new[] { NamedOnnxValue.CreateFromTensor("input", inputTensor) };
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
             using var results = model.Run(inputs);
-
+            var elapsed = stopwatch.ElapsedMilliseconds;
             // Step 5: 获取输出mask
             var output = results.First().AsTensor<float>(); // shape: [1, 1, 512, 512]
             var maskArray = output.ToArray();
-            var maskMat = Mat.FromPixelData(256, 256, MatType.CV_32F, maskArray);
+            var maskMat = Mat.FromPixelData(h, w, MatType.CV_32F, maskArray);
             //var maskMat = new Mat(512, 512, MatType.CV_32F, maskArray);
 
-            // Step 6: 归一化、转uint8
-            Cv2.Normalize(maskMat, maskMat, 0, 255, NormTypes.MinMax);
-            maskMat.ConvertTo(maskMat, MatType.CV_8U);
 
-            using var maskResized = new Mat();
+            var maskResized = new Mat();
             Cv2.Resize(maskMat, maskResized, image.Size());
+            maskResized = maskResized.Clone();
+            maskResized.ConvertTo(maskResized, MatType.CV_8U, 255);
 
             // Step 7: 合成透明PNG
             Mat[] channelsArr = Cv2.Split(image);
